@@ -1,0 +1,33 @@
+# PowerShell profile - shared between Windows PowerShell 5.1 and PowerShell 7.
+# Managed by chezmoi: https://github.com/cbhomelab/dotfiles
+# (This is a chezmoi template partial - included from both profile locations.)
+
+function ll { Get-ChildItem @args }
+function la { Get-ChildItem -Force @args }
+function l  { Get-ChildItem -Name @args }
+
+function gs  { git status @args }
+function ga  { git add @args }
+function gc  { git commit @args }
+function gp  { git push @args }
+function gl  { git pull @args }
+function gd  { git diff @args }
+function gco { git checkout @args }
+
+function dotfiles-edit  { chezmoi edit @args }
+function dotfiles-apply { chezmoi apply -v @args }
+function dotfiles-diff  { chezmoi diff @args }
+function dotfiles-cd    { Set-Location (chezmoi source-path) }
+
+# Modern replacements, only if installed - never break the shell if missing
+if (Get-Command eza -ErrorAction SilentlyContinue) {
+    function ll { eza -lh --icons @args }
+    function la { eza -lAh --icons @args }
+}
+if (Get-Command bat -ErrorAction SilentlyContinue) {
+    Set-Alias -Name cat -Value bat -Option AllScope
+}
+
+if (Get-Command starship -ErrorAction SilentlyContinue) {
+    Invoke-Expression (&starship init powershell)
+}

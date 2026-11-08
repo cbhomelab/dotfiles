@@ -1,0 +1,27 @@
+# ~/.bash_aliases - shared alias set, mirrored (by name/behavior) in .zshrc and PowerShell profile
+# Managed by chezmoi: https://github.com/cbhomelab/dotfiles
+
+alias ll='ls -lh'
+alias la='ls -lAh'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias grep='grep --color=auto'
+
+# Modern replacements, only if installed - never break the shell if missing
+command -v eza  >/dev/null 2>&1 && alias ls='eza --icons' && alias ll='eza -lh --icons' && alias la='eza -lAh --icons'
+command -v bat  >/dev/null 2>&1 && alias cat='bat --paging=never'
+command -v rg   >/dev/null 2>&1 && alias grep='rg'
+
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias gd='git diff'
+alias gco='git checkout'
+
+alias dotfiles-edit='chezmoi edit'
+alias dotfiles-apply='chezmoi apply -v'
+alias dotfiles-diff='chezmoi diff'
+alias dotfiles-cd='cd "$(chezmoi source-path)"'

@@ -1,0 +1,28 @@
+[user]
+    name = {{ .name }}
+    email = {{ .email }}
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = false
+
+[core]
+    editor = {{ if eq .chezmoi.os "windows" }}notepad{{ else }}vim{{ end }}
+{{- if eq .chezmoi.os "windows" }}
+    autocrlf = true
+{{- else }}
+    autocrlf = input
+{{- end }}
+
+[filter "lfs"]
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+
+# Credential helper is intentionally NOT set here - this file is included
+# from ~/.gitconfig (see run_once_setup-gitconfig-include), which is left
+# unmanaged by chezmoi specifically so `gh auth setup-git` can keep writing
+# its own [credential "..."] blocks there without chezmoi fighting it.

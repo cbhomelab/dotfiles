@@ -1,0 +1,27 @@
+# ~/.zshrc - Oh My Zsh for completions/plugins, Starship for the prompt.
+# Managed by chezmoi: https://github.com/cbhomelab/dotfiles
+
+export ZSH="$HOME/.oh-my-zsh"
+
+# No theme here on purpose - Starship renders the prompt (see ~/.config/starship.toml),
+# same look across bash/zsh/PowerShell.
+ZSH_THEME=""
+
+plugins=(git)
+
+[ -d "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
+
+# Shared alias set (same file bash uses - alias syntax is identical in both shells)
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+
+HISTSIZE=5000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS
+setopt APPEND_HISTORY
+
+# fzf (if installed)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi

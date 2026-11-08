@@ -1,0 +1,16 @@
+﻿# Adds an [include] pointing at the chezmoi-managed ~/.gitconfig-chezmoi,
+# without ever touching the rest of ~/.gitconfig (gh CLI and other tools
+# write their own credential helper blocks there - this must stay unmanaged).
+
+$gitconfig = Join-Path $HOME '.gitconfig'
+$includeLine = 'path = ~/.gitconfig-chezmoi'
+
+if (-not (Test-Path $gitconfig)) {
+    New-Item -ItemType File -Path $gitconfig -Force | Out-Null
+}
+
+$content = Get-Content -Path $gitconfig -Raw -ErrorAction SilentlyContinue
+if (-not $content -or -not $content.Contains($includeLine)) {
+    Add-Content -Path $gitconfig -Value "`n[include]`n`tpath = ~/.gitconfig-chezmoi"
+    Write-Host "Added [include] for ~/.gitconfig-chezmoi to $gitconfig"
+}

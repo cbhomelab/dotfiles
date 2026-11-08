@@ -1,0 +1,13 @@
+﻿# One-time setup for a fresh Windows machine: Starship + PowerShell 7, both
+# skipped silently if already installed. Safe to re-run (chezmoi only runs
+# this once per machine anyway, tracked by content hash).
+
+if (-not (Get-Command starship -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing Starship..."
+    winget install --id Starship.Starship -e --silent --accept-package-agreements --accept-source-agreements
+}
+
+if (-not (Get-Command pwsh -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing PowerShell 7..."
+    winget install --id Microsoft.PowerShell -e --silent --accept-package-agreements --accept-source-agreements
+}

@@ -1,0 +1,10 @@
+{{- if ne .chezmoi.os "windows" }}
+Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
+Documents/PowerShell/Microsoft.PowerShell_profile.ps1
+setup-gitconfig-include.ps1
+install-tools.ps1
+{{- end }}
+{{- if eq .chezmoi.os "windows" }}
+setup-gitconfig-include.sh
+install-tools.sh
+{{- end }}

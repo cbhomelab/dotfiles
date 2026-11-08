@@ -1,0 +1,37 @@
+#!/bin/sh
+# ~/.bashrc - common interactive-shell config, shared concepts with .zshrc
+# Managed by chezmoi: https://github.com/cbhomelab/dotfiles
+
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+HISTCONTROL=ignoreboth
+HISTSIZE=5000
+HISTFILESIZE=10000
+shopt -s histappend
+shopt -s checkwinsize
+
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
+if [ -x /usr/bin/dircolors ]; then
+    eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+fi
+
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# fzf (if installed)
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash
+
+# Starship prompt (same config as zsh/PowerShell - see ~/.config/starship.toml)
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init bash)"
+fi

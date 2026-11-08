@@ -1,0 +1,14 @@
+#!/bin/sh
+# One-time setup for a fresh machine: Oh My Zsh + Starship, both skipped
+# silently if already installed. Safe to re-run (chezmoi only runs this
+# once per machine anyway, tracked by content hash).
+
+if [ ! -d "$HOME/.oh-my-zsh" ] && command -v zsh >/dev/null 2>&1; then
+    echo "Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+if ! command -v starship >/dev/null 2>&1; then
+    echo "Installing Starship..."
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+fi

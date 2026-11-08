@@ -1,0 +1,13 @@
+#!/bin/sh
+# Adds an [include] pointing at the chezmoi-managed ~/.gitconfig-chezmoi,
+# without ever touching the rest of ~/.gitconfig (gh CLI and other tools
+# write their own credential helper blocks there - this must stay unmanaged).
+
+GITCONFIG="$HOME/.gitconfig"
+INCLUDE_LINE="path = ~/.gitconfig-chezmoi"
+
+touch "$GITCONFIG"
+if ! grep -qF "$INCLUDE_LINE" "$GITCONFIG" 2>/dev/null; then
+    printf '\n[include]\n\t%s\n' "$INCLUDE_LINE" >> "$GITCONFIG"
+    echo "Added [include] for ~/.gitconfig-chezmoi to ~/.gitconfig"
+fi
