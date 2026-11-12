@@ -3,10 +3,13 @@
 # silently if already installed. Safe to re-run (chezmoi only runs this
 # once per machine anyway, tracked by content hash).
 
+{{- if eq .profile "christian" }}
 if [ ! -d "$HOME/.oh-my-zsh" ] && command -v zsh >/dev/null 2>&1; then
     echo "Installing Oh My Zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
+{{- end }}
+{{- /* hermes profile is pared-down: no zsh/Oh My Zsh, Starship-only prompt */}}
 
 if ! command -v starship >/dev/null 2>&1; then
     echo "Installing Starship..."

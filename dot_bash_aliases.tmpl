@@ -13,6 +13,11 @@ command -v eza  >/dev/null 2>&1 && alias ls='eza --icons' && alias ll='eza -lh -
 command -v bat  >/dev/null 2>&1 && alias cat='bat --paging=never'
 command -v rg   >/dev/null 2>&1 && alias grep='rg'
 
+{{- if eq .profile "christian" }}
+# Git porcelain shortcuts - christian's personal workflow only. Deliberately
+# NOT applied to the hermes profile (decision: 2026-11-12, pared-down
+# automation account - hermes should use explicit git subcommands, not
+# habit-driven shortcuts).
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
@@ -20,6 +25,7 @@ alias gp='git push'
 alias gl='git pull'
 alias gd='git diff'
 alias gco='git checkout'
+{{- end }}
 
 alias dotfiles-edit='chezmoi edit'
 alias dotfiles-apply='chezmoi apply -v'

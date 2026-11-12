@@ -1,3 +1,23 @@
+{{- /*
+Uses promptString (not promptStringOnce): this must work fully
+non-interactively when driven by Ansible (roles/shell_config), which
+always passes explicit --promptString flags on every `chezmoi init`
+invocation rather than relying on chezmoi's own one-time-answer cache.
+
+IMPORTANT: for promptString, the --promptString key must match the
+function's first argument EXACTLY (it's used as both the prompt text
+and the lookup key) - so the first arg below is deliberately just
+"profile"/"name"/"email", not a longer human-readable sentence.
+*/ -}}
+{{- $profile := promptString "profile" "christian" -}}
 data:
-    name: {{ promptStringOnce . "name" "Full name for git commits" }}
-    email: {{ promptStringOnce . "email" "Email for git commits" }}
+    profile: {{ $profile }}
+{{- if eq $profile "hermes" }}
+    # hermes is an automation account - skip the personal name/email prompt
+    # entirely rather than asking (this must work unattended via Ansible).
+    name: "Hermes Agent"
+    email: "hermes@cbho.me"
+{{- else }}
+    name: {{ promptString "name" }}
+    email: {{ promptString "email" }}
+{{- end }}

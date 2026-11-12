@@ -35,6 +35,39 @@ apply. So instead:
 - `gh auth setup-git`, local per-repo overrides, etc. can keep editing
   `~/.gitconfig` freely without chezmoi ever clobbering them
 
+## Profiles: christian vs hermes
+
+This repo serves two kinds of accounts, selected via a `profile` chezmoi
+data variable (not a separate repo/branch):
+
+| | `profile: christian` (default) | `profile: hermes` |
+|---|---|---|
+| Shells | zsh (Oh My Zsh, no theme) + bash | bash only |
+| Prompt | Starship | Starship (identical config) |
+| Aliases | full set incl. git porcelain (`gs`, `ga`, `gc`, `gp`, `gl`, `gd`, `gco`) | nav/listing aliases + `dotfiles-*` only — no git porcelain shortcuts |
+| Git identity (`~/.gitconfig-chezmoi`) | prompted name/email, included into `~/.gitconfig` | not deployed at all |
+| PowerShell profile (Windows) | yes | n/a — hermes has no Windows OS account, only a distinct SSH key into christian's |
+
+Decision (2026-11-12): hermes is an automation account, so it gets this
+pared-down profile rather than an identical copy of christian's dotfiles —
+no personal git identity, no personal git shortcuts, no secrets-adjacent
+bits. Everything profile-conditional lives in `.chezmoiignore` and the
+`.tmpl` files themselves (`{{- if eq .profile "hermes" }}` / `"christian"`
+blocks) — there is no separate source tree to keep in sync.
+
+Non-interactive init (what the Ansible `shell_config` role actually runs):
+
+```sh
+# christian
+chezmoi init --apply --promptString profile=christian \
+  --promptString name="Christian Bishop" --promptString email="christian@cbho.me" \
+  https://github.com/cbhomelab/dotfiles.git
+
+# hermes (name/email are hardcoded for this profile, not prompted)
+chezmoi init --apply --promptString profile=hermes \
+  https://github.com/cbhomelab/dotfiles.git
+```
+
 ## Setting up a new machine
 
 ### Prerequisites

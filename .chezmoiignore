@@ -8,3 +8,15 @@ install-tools.ps1
 setup-gitconfig-include.sh
 install-tools.sh
 {{- end }}
+
+{{- /*
+hermes is a pared-down automation profile (decision: 2026-11-12) - no
+personal git identity, no gitconfig include hookup, no zsh/Oh My Zsh.
+Starship (shared prompt), bash, and standard completions/PATH still apply.
+*/}}
+{{- if eq .profile "hermes" }}
+.gitconfig-chezmoi
+setup-gitconfig-include.sh
+setup-gitconfig-include.ps1
+.zshrc
+{{- end }}
