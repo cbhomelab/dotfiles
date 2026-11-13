@@ -13,5 +13,14 @@ fi
 
 if ! command -v starship >/dev/null 2>&1; then
     echo "Installing Starship..."
-    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+    # IMPORTANT: --bin-dir "$HOME/.local/bin", not the installer's default
+    # of /usr/local/bin. The default triggers the installer's elevate_priv()
+    # -> `sudo -v`, which HANGS FOREVER over a non-interactive Ansible
+    # connection with no controlling TTY (no password prompt ever arrives,
+    # and -v doesn't fail fast even with NOPASSWD sudo configured for the
+    # account). Installing to the user's own writable ~/.local/bin avoids
+    # sudo entirely. ~/.local/bin is already on PATH via Debian's default
+    # ~/.profile (added by adduser's /etc/skel) on every target host.
+    mkdir -p "$HOME/.local/bin"
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 fi
