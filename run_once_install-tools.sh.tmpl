@@ -6,7 +6,7 @@
 {{- if eq .profile "christian" }}
 if [ ! -d "$HOME/.oh-my-zsh" ] && command -v zsh >/dev/null 2>&1; then
     echo "Installing Oh My Zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended < /dev/null
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 {{- end }}
 {{- /* hermes profile is pared-down: no zsh/Oh My Zsh, Starship-only prompt */}}
@@ -21,11 +21,16 @@ if ! command -v starship >/dev/null 2>&1; then
     # account). Installing to the user's own writable ~/.local/bin avoids
     # sudo entirely. ~/.local/bin is already on PATH via Debian's default
     # ~/.profile (added by adduser's /etc/skel) on every target host.
+    #
+    # NOTE: do NOT add `< /dev/null` to this pipe - it looked like a fix
+    # for a stdin-related hang but actually redirects sh's stdin AWAY from
+    # the curl pipe (</dev/null binds to the right-hand command in a
+    # pipeline), so sh sees immediate EOF, runs nothing, and curl dies with
+    # "Failure writing output to destination" (broken pipe). The original
+    # hang this was "fixing" was actually just a stale pre---bin-dir
+    # version of this script lingering in an unrefreshed chezmoi source
+    # checkout - see roles/shell_config/tasks/linux.yml's explicit
+    # `git fetch && git reset --hard origin/HEAD` step for the real fix.
     mkdir -p "$HOME/.local/bin"
-    # Explicitly close stdin (</dev/null): under a non-interactive Ansible
-    # `command` invocation (no pty, no explicit stdin redirect), the
-    # installer's own `read` calls can block forever waiting for input
-    # that will never arrive, even with --yes passed. Observed hang:
-    # the installed sh process sits at 0% CPU indefinitely.
-    curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin" < /dev/null
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 fi
