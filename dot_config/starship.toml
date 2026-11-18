@@ -4,7 +4,7 @@
 # solid colour blocks joined by powerline arrows. Needs a Nerd/Powerline font.
 # os(+user@host) -> directory -> git, then cmd duration and the prompt char.
 format = """
-${custom.host_neptune}${custom.host_saturn}${custom.host_pihole}${custom.host_homeassistant}${custom.host_steamdeck}${custom.host_forgejo}${custom.host_unifi}${custom.host_docker}${custom.host_opnsense}${custom.host_default}${custom.host_mac}${custom.host_win}$directory\
+${custom.host_neptune}${custom.host_saturn}${custom.host_pihole}${custom.host_homeassistant}${custom.host_steamdeck}${custom.host_forgejo}${custom.host_unifi}${custom.host_docker}${custom.host_opnsense}${custom.host_opnsense_bsd}${custom.host_default}${custom.host_mac}${custom.host_win}$directory\
 ${custom.nogit}${custom.nogit_macos}${custom.nogit_win}($git_branch$git_status[](fg:green))\
 $cmd_duration
 $character"""
@@ -78,6 +78,13 @@ format = "[ $output ](bold fg:#000000 bg:#2496ED)[](fg:#2496ED bg:blue)"
 
 [custom.host_opnsense]
 os = "linux"
+when = 'case "$(uname -n | cut -d. -f1)" in opnsense*|router) exit 0;; *) exit 1;; esac'
+shell = ["sh"]
+command = '''i="󰒘"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
+format = "[ $output ](bold fg:#FFFFFF bg:#C2410C)[](fg:#C2410C bg:blue)"
+
+[custom.host_opnsense_bsd]
+os = "freebsd"
 when = 'case "$(uname -n | cut -d. -f1)" in opnsense*|router) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
 command = '''i="󰒘"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
