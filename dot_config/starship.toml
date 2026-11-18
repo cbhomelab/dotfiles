@@ -5,7 +5,7 @@
 # os(+user@host) -> directory -> git, then cmd duration and the prompt char.
 format = """
 $os$username$hostname$directory\
-$custom($git_branch$git_status[](fg:green))\
+$custom($git_branch$git_status[](fg:green))\
 $cmd_duration
 $character"""
 
@@ -17,9 +17,9 @@ format = "[ $symbol]($style)"
 style = "bold fg:white bg:black"
 
 [os.symbols]
-Windows = "  "
-Linux = "  "
-Macos = "  "
+Windows = " "
+Linux = " "
+Macos = " "
 
 [username]
 show_always = false
@@ -37,18 +37,18 @@ truncation_length = 4
 truncate_to_repo = true
 style = "bold fg:white bg:blue"
 read_only_style = "fg:red bg:blue"
-format = "[](fg:black bg:blue)[ $path ]($style)[$read_only]($read_only_style)"
+format = "[](fg:black bg:blue)[ $path ]($style)[$read_only]($read_only_style)"
 
 # Closing arrow for directory when not in a git repo
 [custom.nogit]
 when = "! git rev-parse --is-inside-work-tree"
-format = "[](fg:blue)"
+format = "[](fg:blue)"
 shell = ["sh"]
 
 [git_branch]
-symbol = " "
+symbol = " "
 style = "fg:black bg:green"
-format = "[](fg:blue bg:green)[ $symbol$branch ]($style)"
+format = "[](fg:blue bg:green)[ $symbol$branch ]($style)"
 
 # Status stays inside the green block; the closing arrow is in the top-level
 # format group above so it only appears inside a git repo.
