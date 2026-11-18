@@ -36,7 +36,7 @@ case "$(hostname -s)" in
 esac
 printf '%s' "$i"
 '''
-format = "[ $output]($style)"
+format = "[ $output  ]($style)"
 style = "bold fg:white bg:black"
 
 [custom.hosticon_mac]
@@ -44,7 +44,7 @@ os = "macos"
 when = true
 shell = ["sh"]
 command = "printf '%s' ' '"
-format = "[ $output]($style)"
+format = "[ $output  ]($style)"
 style = "bold fg:white bg:black"
 
 [custom.hosticon_win]
@@ -52,7 +52,7 @@ os = "windows"
 when = true
 shell = ["powershell", "-NoProfile", "-Command", "-"]
 command = "Write-Output ' '"
-format = "[ $output]($style)"
+format = "[ $output  ]($style)"
 style = "bold fg:white bg:black"
 
 [username]
