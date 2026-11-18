@@ -5,7 +5,7 @@
 # os(+user@host) -> directory -> git, then cmd duration and the prompt char.
 format = """
 ${custom.host_neptune}${custom.host_saturn}${custom.host_pihole}${custom.host_homeassistant}${custom.host_steamdeck}${custom.host_forgejo}${custom.host_unifi}${custom.host_docker}${custom.host_opnsense}${custom.host_opnsense_bsd}${custom.host_default}${custom.host_mac}${custom.host_win}$directory\
-${custom.nogit}${custom.nogit_macos}${custom.nogit_win}($git_branch$git_status[](fg:green))\
+${custom.nogit}${custom.nogit_bsd}${custom.nogit_macos}${custom.nogit_win}($git_branch$git_status[](fg:green))\
 $cmd_duration
 $character"""
 
@@ -134,6 +134,12 @@ format = "[ $path ]($style)[$read_only]($read_only_style)"
 # a custom module; one per shell family because Windows has no `sh`.
 [custom.nogit]
 os = "linux"
+when = "! git rev-parse --is-inside-work-tree"
+format = "[](fg:blue)"
+shell = ["sh"]
+
+[custom.nogit_bsd]
+os = "freebsd"
 when = "! git rev-parse --is-inside-work-tree"
 format = "[](fg:blue)"
 shell = ["sh"]
