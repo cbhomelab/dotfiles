@@ -1,0 +1,41 @@
+# Homelab SSH aliases (managed by chezmoi: cbhomelab/dotfiles).
+# `ssh saturn` -> christian@10.20.0.2, etc. Not applied for the hermes profile.
+# Keep in sync with cbhomelab/ansible inventory/hosts.yml.
+
+# --- Infrastructure (Linux, user christian) ---
+Host neptune
+    HostName 10.20.0.6
+Host saturn
+    HostName 10.20.0.2
+Host intranet lxc102-intranet
+    HostName 10.20.0.4
+Host glance lxc104-glance
+    HostName 10.20.0.202
+Host minecraft lxc105-minecraft
+    HostName 10.20.0.130
+Host unifi lxc107-unifi
+    HostName 10.20.0.19
+Host pihole lxc108-pihole
+    HostName 10.20.0.8
+Host forgejo lxc110-forgejo
+    HostName 10.20.0.50
+
+# --- Windows PCs (user christian) ---
+Host cb-gaming
+    HostName 10.10.0.17
+Host ab-gaming
+    HostName 10.10.0.50
+Host girls-pc
+    HostName 10.10.0.90
+
+# --- Steam Deck (user deck; dock address, WiFi as a separate alias) ---
+Host steamdeck cb-steamdeck
+    HostName cb-steamdeck-dock.cbhomelab.net
+    User deck
+Host steamdeck-wifi
+    HostName cb-steamdeck-wifi.cbhomelab.net
+    User deck
+
+# Default for everything above that doesn't set a user
+Host neptune saturn intranet lxc102-intranet glance lxc104-glance minecraft lxc105-minecraft unifi lxc107-unifi pihole lxc108-pihole forgejo lxc110-forgejo cb-gaming ab-gaming girls-pc
+    User christian

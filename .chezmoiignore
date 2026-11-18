@@ -19,4 +19,5 @@ Starship (shared prompt), bash, and standard completions/PATH still apply.
 setup-gitconfig-include.sh
 setup-gitconfig-include.ps1
 .zshrc
+.ssh/config
 {{- end }}
