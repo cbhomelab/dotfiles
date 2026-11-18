@@ -22,79 +22,79 @@ disabled = true   # replaced by custom.hosticon (per-host icon), see below
 # contrast against each background. Unlisted hosts fall back to black + OS glyph.
 [custom.host_neptune]
 os = "linux"
-when = 'case "$(hostname -s)" in neptune) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in neptune) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i=""; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i=""; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#000000 bg:#E57000)[](fg:#E57000 bg:blue)"
 
 [custom.host_saturn]
 os = "linux"
-when = 'case "$(hostname -s)" in saturn) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in saturn) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰒋"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰒋"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#000000 bg:#9CCBF2)[](fg:#9CCBF2 bg:blue)"
 
 [custom.host_pihole]
 os = "linux"
-when = 'case "$(hostname -s)" in pihole) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in pihole) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰷱"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰷱"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#FFFFFF bg:#C8102E)[](fg:#C8102E bg:blue)"
 
 [custom.host_homeassistant]
 os = "linux"
-when = 'case "$(hostname -s)" in vm101*|homeassistant) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in vm101*|homeassistant) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰟐"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰟐"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#000000 bg:#18BCF2)[](fg:#18BCF2 bg:blue)"
 
 [custom.host_steamdeck]
 os = "linux"
-when = 'case "$(hostname -s)" in steamdeck) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in steamdeck) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰺶"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰺶"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#FFFFFF bg:#6C4AB6)[](fg:#6C4AB6 bg:blue)"
 
 [custom.host_forgejo]
 os = "linux"
-when = 'case "$(hostname -s)" in forgejo) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in forgejo) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰊢"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰊢"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#000000 bg:#609926)[](fg:#609926 bg:blue)"
 
 [custom.host_unifi]
 os = "linux"
-when = 'case "$(hostname -s)" in unifi) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in unifi) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰨹"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰨹"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#FFFFFF bg:#0B5FD6)[](fg:#0B5FD6 bg:blue)"
 
 [custom.host_docker]
 os = "linux"
-when = 'case "$(hostname -s)" in intranet|glance|minecraft) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in intranet|glance|minecraft) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰡨"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰡨"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#000000 bg:#2496ED)[](fg:#2496ED bg:blue)"
 
 [custom.host_opnsense]
 os = "linux"
-when = 'case "$(hostname -s)" in opnsense*) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in opnsense*) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
-command = '''i="󰒘"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i="󰒘"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#FFFFFF bg:#C2410C)[](fg:#C2410C bg:blue)"
 
 [custom.host_default]
 os = "linux"
-when = 'case "$(hostname -s)" in neptune|saturn|pihole|vm101*|homeassistant|steamdeck|forgejo|unifi|intranet|glance|minecraft|opnsense*) exit 1;; *) exit 0;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in neptune|saturn|pihole|vm101*|homeassistant|steamdeck|forgejo|unifi|intranet|glance|minecraft|opnsense*) exit 1;; *) exit 0;; esac'
 shell = ["sh"]
-command = '''i=""; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i=""; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:white bg:black)[](fg:black bg:blue)"
 
 [custom.host_mac]
 os = "macos"
 when = true
 shell = ["sh"]
-command = '''i=""; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(hostname -s)"; fi'''
+command = '''i=""; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:white bg:black)[](fg:black bg:blue)"
 
 [custom.host_win]
