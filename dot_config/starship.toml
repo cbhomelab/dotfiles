@@ -19,7 +19,7 @@ disabled = true   # replaced by custom.hosticon (per-host icon), see below
 # No Steam Deck glyph exists in Nerd Fonts; md-gamepad_square_outline is the closest.
 [custom.hosticon]
 os = "linux"
-when = "true"
+when = true
 shell = ["sh"]
 command = '''
 case "$(hostname -s)" in
@@ -41,7 +41,7 @@ style = "bold fg:white bg:black"
 
 [custom.hosticon_mac]
 os = "macos"
-when = "true"
+when = true
 shell = ["sh"]
 command = "printf '%s' ' '"
 format = "[ $output]($style)"
@@ -49,7 +49,7 @@ style = "bold fg:white bg:black"
 
 [custom.hosticon_win]
 os = "windows"
-when = "true"
+when = true
 shell = ["powershell", "-NoProfile", "-Command", "-"]
 command = "Write-Output ' '"
 format = "[ $output]($style)"
