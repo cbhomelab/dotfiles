@@ -5,7 +5,7 @@
 # os(+user@host) -> directory -> git, then cmd duration and the prompt char.
 format = """
 $os$username$hostname$directory\
-$custom($git_branch$git_status[](fg:green))\
+${custom.nogit}${custom.nogit_macos}${custom.nogit_win}($git_branch$git_status[](fg:green))\
 $cmd_duration
 $character"""
 
@@ -39,11 +39,26 @@ style = "bold fg:white bg:blue"
 read_only_style = "fg:red bg:blue"
 format = "[](fg:black bg:blue)[ $path ]($style)[$read_only]($read_only_style)"
 
-# Closing arrow for directory when not in a git repo
+# Closing arrow for the directory block when NOT in a git repo (inside a repo
+# the git block supplies it). Starship has no "inverse" conditional, so this is
+# a custom module; one per shell family because Windows has no `sh`.
 [custom.nogit]
+os = "linux"
 when = "! git rev-parse --is-inside-work-tree"
 format = "[](fg:blue)"
 shell = ["sh"]
+
+[custom.nogit_macos]
+os = "macos"
+when = "! git rev-parse --is-inside-work-tree"
+format = "[](fg:blue)"
+shell = ["sh"]
+
+[custom.nogit_win]
+os = "windows"
+when = "if (git rev-parse --is-inside-work-tree 2>$null) { exit 1 } else { exit 0 }"
+format = "[](fg:blue)"
+shell = ["powershell", "-NoProfile", "-Command", "-"]
 
 [git_branch]
 symbol = " "
