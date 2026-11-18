@@ -1,14 +1,20 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Bullet-train look (https://github.com/caiogondim/bullet-train.zsh):
+# solid colour blocks joined by powerline arrows. Needs a Nerd/Powerline font.
+# os(+user@host) -> directory -> git, then cmd duration and the prompt char.
 format = """
-$os$username$hostname$directory$git_branch$git_status$cmd_duration
+$os$username$hostname$directory\
+$custom($git_branch$git_status[](fg:green))\
+$cmd_duration
 $character"""
 
 add_newline = true
 
 [os]
 disabled = false
-style = "bold blue"
+format = "[ $symbol]($style)"
+style = "bold fg:white bg:black"
 
 [os.symbols]
 Windows = "  "
@@ -17,34 +23,45 @@ Macos = "  "
 
 [username]
 show_always = false
-style_user = "bold green"
-format = "[$user]($style)@"
+style_user = "fg:white bg:black"
+style_root = "bold fg:red bg:black"
+format = "[$user]($style)"
 
 [hostname]
 ssh_only = true
-format = "[$hostname]($style) "
-style = "bold yellow"
+style = "bold fg:yellow bg:black"
+format = "[@$hostname ]($style)"
 
 [directory]
 truncation_length = 4
 truncate_to_repo = true
-style = "bold cyan"
-format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold fg:white bg:blue"
+read_only_style = "fg:red bg:blue"
+format = "[](fg:black bg:blue)[ $path ]($style)[$read_only]($read_only_style)"
+
+# Closing arrow for directory when not in a git repo
+[custom.nogit]
+when = "! git rev-parse --is-inside-work-tree"
+format = "[](fg:blue)"
+shell = ["sh"]
 
 [git_branch]
-format = "[ $branch]($style) "
-style = "bold purple"
+symbol = " "
+style = "fg:black bg:green"
+format = "[](fg:blue bg:green)[ $symbol$branch ]($style)"
 
+# Status stays inside the green block; the closing arrow is in the top-level
+# format group above so it only appears inside a git repo.
 [git_status]
-format = "[$all_status$ahead_behind]($style) "
-style = "bold red"
+style = "bold fg:red bg:green"
+format = "([$all_status$ahead_behind ]($style))"
 
 [cmd_duration]
 min_time = 2000
-format = "took [$duration]($style) "
+format = " [took $duration]($style)"
 style = "bold yellow"
 
 [character]
-success_symbol = "[>](bold green)"
-error_symbol = "[>](bold red)"
-vimcmd_symbol = "[<](bold green)"
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
