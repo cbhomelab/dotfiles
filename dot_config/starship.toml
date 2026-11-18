@@ -4,7 +4,7 @@
 # solid colour blocks joined by powerline arrows. Needs a Nerd/Powerline font.
 # os(+user@host) -> directory -> git, then cmd duration and the prompt char.
 format = """
-$os$username$hostname$directory\
+${custom.hosticon}${custom.hosticon_mac}${custom.hosticon_win}$username$hostname$directory\
 ${custom.nogit}${custom.nogit_macos}${custom.nogit_win}($git_branch$git_status[](fg:green))\
 $cmd_duration
 $character"""
@@ -12,14 +12,48 @@ $character"""
 add_newline = true
 
 [os]
-disabled = false
-format = "[ $symbol]($style)"
+disabled = true   # replaced by custom.hosticon (per-host icon), see below
+
+# Per-host icon in place of the OS icon. Edit the case list to add hosts; the
+# fallback is the normal OS glyph. Glyphs are Nerd Font (md-*, dev-proxmox).
+# No Steam Deck glyph exists in Nerd Fonts; md-gamepad_square_outline is the closest.
+[custom.hosticon]
+os = "linux"
+when = "true"
+shell = ["sh"]
+command = '''
+case "$(hostname -s)" in
+  neptune)   i="" ;;   # dev-proxmox
+  saturn)    i="󰒋" ;;
+  pihole)    i="󰷱" ;;   # md-pi_hole
+  vm101*|homeassistant) i="󰟐" ;;   # md-home_assistant
+  steamdeck) i="󰺶" ;;   # md-gamepad_square_outline
+  forgejo)   i="󰊢" ;;
+  unifi)     i="󰨹" ;;
+  intranet|glance|minecraft) i="󰡨" ;;
+  opnsense*) i="󰒘" ;;
+  *) if [ "$(uname)" = Darwin ]; then i=" "; else i=" "; fi ;;
+esac
+printf '%s' "$i"
+'''
+format = "[ $output]($style)"
 style = "bold fg:white bg:black"
 
-[os.symbols]
-Windows = " "
-Linux = " "
-Macos = " "
+[custom.hosticon_mac]
+os = "macos"
+when = "true"
+shell = ["sh"]
+command = "printf '%s' ' '"
+format = "[ $output]($style)"
+style = "bold fg:white bg:black"
+
+[custom.hosticon_win]
+os = "windows"
+when = "true"
+shell = ["powershell", "-NoProfile", "-Command", "-"]
+command = "Write-Output ' '"
+format = "[ $output]($style)"
+style = "bold fg:white bg:black"
 
 [username]
 show_always = false
