@@ -78,14 +78,14 @@ format = "[ $output ](bold fg:#000000 bg:#2496ED)[](fg:#2496ED bg:blue)"
 
 [custom.host_opnsense]
 os = "linux"
-when = 'case "$(uname -n | cut -d. -f1)" in opnsense*) exit 0;; *) exit 1;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in opnsense*|router) exit 0;; *) exit 1;; esac'
 shell = ["sh"]
 command = '''i="󰒘"; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:#FFFFFF bg:#C2410C)[](fg:#C2410C bg:blue)"
 
 [custom.host_default]
 os = "linux"
-when = 'case "$(uname -n | cut -d. -f1)" in neptune|saturn|pihole|vm101*|homeassistant|steamdeck|forgejo|unifi|intranet|glance|minecraft|opnsense*) exit 1;; *) exit 0;; esac'
+when = 'case "$(uname -n | cut -d. -f1)" in neptune|saturn|pihole|vm101*|homeassistant|steamdeck|forgejo|unifi|intranet|glance|minecraft|opnsense*|router) exit 1;; *) exit 0;; esac'
 shell = ["sh"]
 command = '''i=""; printf '%s' "$i"; if [ -n "$SSH_CONNECTION" ] || [ "$(id -u)" = 0 ]; then printf '  %s@%s' "$(id -un)" "$(uname -n | cut -d. -f1)"; fi'''
 format = "[ $output ](bold fg:white bg:black)[](fg:black bg:blue)"
